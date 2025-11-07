@@ -1,5 +1,6 @@
 import "./styles.css";
 import { getWeather } from "./api-call";
+import { getFavorites, addFavorite, removeFavorite, isFavorite, clearAllFavorites } from "./favorites";
 
 const locationContainer = document.querySelector("#location-container")
 
@@ -12,6 +13,13 @@ const submit = document.createElement("button");
 submit.textContent = "Submit"
 submit.setAttribute("type", "button");
 locationContainer.appendChild(submit);
+
+const favoriteBtn = document.createElement("button");
+favoriteBtn.id = "favorite-btn";
+favoriteBtn.innerHTML = "☆ Add to Favorites";
+favoriteBtn.setAttribute("type", "button");
+favoriteBtn.classList.add("favorite-btn");
+locationContainer.appendChild(favoriteBtn);
 
 async function printWeather(location) {
     try {
@@ -83,9 +91,126 @@ async function printWeather(location) {
         }
         weatherWind.textContent = `Wind is currently ${weather.windSpeed} km/h from the ${windDirection}, with gusts up to ${weather.windGust} km/h.`;
         weatherOutput.appendChild(weatherWind);
+        
+        // Update favorite button state after successful weather fetch
+        updateFavoriteButtonState(weather.resolvedAddress);
+        
     } catch {
         alert("Couldn't find that location.")
     }
 }
 
-submit.addEventListener("click", () => printWeather(locationInput.value))
+// Function to update favorite button appearance
+function updateFavoriteButtonState(location) {
+    if (!location) return;
+    
+    if (isFavorite(location)) {
+        favoriteBtn.innerHTML = "★ Remove from Favorites";
+        favoriteBtn.classList.add("favorited");
+    } else {
+        favoriteBtn.innerHTML = "☆ Add to Favorites";
+        favoriteBtn.classList.remove("favorited");
+    }
+    favoriteBtn.disabled = false;
+}
+
+// Function to render favorites list
+function renderFavorites() {
+    const favoritesContainer = document.querySelector("#favorites-container");
+    const favorites = getFavorites();
+    
+    favoritesContainer.innerHTML = "";
+    
+    if (favorites.length === 0) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.textContent = "No favorite locations saved yet.";
+        emptyMessage.className = "empty-favorites";
+        favoritesContainer.appendChild(emptyMessage);
+        return;
+    }
+    
+    favorites.forEach(location => {
+        const favoriteItem = document.createElement("div");
+        favoriteItem.className = "favorite-item";
+        
+        const favoriteBtn = document.createElement("button");
+        favoriteBtn.textContent = location;
+        favoriteBtn.className = "favorite-location-btn";
+        favoriteBtn.addEventListener("click", () => {
+            locationInput.value = location;
+            printWeather(location);
+        });
+        
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "×";
+        removeBtn.className = "remove-favorite-btn";
+        removeBtn.title = "Remove from favorites";
+        removeBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            removeFavorite(location);
+            renderFavorites();
+            // Update main favorite button if this was the current location
+            const currentLocation = document.querySelector("#weather-output p")?.textContent;
+            if (currentLocation && currentLocation.includes(location)) {
+                updateFavoriteButtonState(location);
+            }
+        });
+        
+        favoriteItem.appendChild(favoriteBtn);
+        favoriteItem.appendChild(removeBtn);
+        favoritesContainer.appendChild(favoriteItem);
+    });
+}
+
+// Event listeners
+submit.addEventListener("click", () => {
+    const location = locationInput.value.trim();
+    if (location) {
+        printWeather(location);
+    }
+});
+
+favoriteBtn.addEventListener("click", () => {
+    const location = locationInput.value.trim();
+    if (!location) {
+        alert("Please enter a location first.");
+        return;
+    }
+    
+    if (isFavorite(location)) {
+        if (removeFavorite(location)) {
+            updateFavoriteButtonState(location);
+            renderFavorites();
+        }
+    } else {
+        if (addFavorite(location)) {
+            updateFavoriteButtonState(location);
+            renderFavorites();
+        } else {
+            alert("This location is already in your favorites.");
+        }
+    }
+});
+
+// Clear all favorites button
+const clearFavoritesBtn = document.querySelector("#clear-favorites");
+clearFavoritesBtn.addEventListener("click", () => {
+    if (confirm("Are you sure you want to clear all favorite locations?")) {
+        clearAllFavorites();
+        renderFavorites();
+        favoriteBtn.innerHTML = "☆ Add to Favorites";
+        favoriteBtn.classList.remove("favorited");
+    }
+});
+
+// Allow Enter key to submit
+locationInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        submit.click();
+    }
+});
+
+// Initialize favorites display on page load
+document.addEventListener("DOMContentLoaded", () => {
+    renderFavorites();
+});

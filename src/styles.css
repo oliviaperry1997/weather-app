@@ -10,8 +10,16 @@ body {
   background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
   min-height: 100vh;
   color: #333;
-  padding: 20px;
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  padding-bottom: 0;
 }
 
 /* Main Container */
@@ -229,4 +237,269 @@ button:active {
   background: linear-gradient(135deg, #00b894, #00cec9) !important;
   color: white !important;
   border-left-color: #00a085 !important;
+}
+
+/* Favorites Section Styling */
+#favorites-section {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+#favorites-section h3 {
+  text-align: center;
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+#favorites-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.favorite-item {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.favorite-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.favorite-location-btn {
+  flex: 1;
+  padding: 15px 20px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease;
+}
+
+.favorite-location-btn:hover {
+  background: rgba(116, 185, 255, 0.1);
+}
+
+.remove-favorite-btn {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, #ff7675, #e17055);
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px;
+  border-radius: 8px;
+}
+
+.remove-favorite-btn:hover {
+  background: linear-gradient(45deg, #e17055, #ff7675);
+  transform: scale(1.1);
+}
+
+.empty-favorites {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px;
+  background: rgba(116, 185, 255, 0.05);
+  border-radius: 12px;
+  border: 2px dashed rgba(116, 185, 255, 0.3);
+}
+
+/* Favorite Button Styling */
+.favorite-btn {
+  margin-left: 10px;
+  padding: 15px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #fd79a8, #e84393);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(253, 121, 168, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.favorite-btn:hover {
+  background: linear-gradient(45deg, #e84393, #fd79a8);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(253, 121, 168, 0.4);
+}
+
+.favorite-btn.favorited {
+  background: linear-gradient(45deg, #fdcb6e, #e17055);
+  box-shadow: 0 4px 15px rgba(253, 203, 110, 0.3);
+}
+
+.favorite-btn.favorited:hover {
+  background: linear-gradient(45deg, #e17055, #fdcb6e);
+  box-shadow: 0 6px 20px rgba(253, 203, 110, 0.4);
+}
+
+/* Secondary Button Styling */
+.secondary-btn {
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #636e72, #2d3436);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(99, 110, 114, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 auto;
+  display: block;
+}
+
+.secondary-btn:hover {
+  background: linear-gradient(45deg, #2d3436, #636e72);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 110, 114, 0.4);
+}
+
+#favorites-actions {
+  text-align: center;
+  padding-top: 15px;
+  border-top: 1px solid rgba(116, 185, 255, 0.2);
+}
+
+/* Responsive Design for Favorites */
+@media (max-width: 768px) {
+  #location-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .favorite-btn {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  #favorites-section {
+    padding: 20px;
+    margin: 0 10px 30px;
+  }
+  
+  #favorites-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .favorite-item {
+    margin-bottom: 5px;
+  }
+  
+  .favorite-location-btn {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Footer Styling */
+footer {
+  margin-top: auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.made-by {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.github-link {
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.9rem;
+}
+
+.github-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.github-link svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* Footer responsive design */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 15px;
+  }
+  
+  footer {
+    padding: 15px;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .made-by {
+    font-size: 0.9rem;
+  }
+  
+  .github-link {
+    padding: 10px 20px;
+  }
 }
