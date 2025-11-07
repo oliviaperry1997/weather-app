@@ -1,0 +1,232 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  min-height: 100vh;
+  color: #333;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* Main Container */
+h1 {
+  text-align: center;
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: 300;
+}
+
+h2 {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+/* Location Input Container */
+#location-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+/* Input Styling */
+#location {
+  padding: 15px 20px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: all 0.3s ease;
+  min-width: 300px;
+  text-align: center;
+}
+
+#location:focus {
+  background: white;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+#location::placeholder {
+  color: #999;
+}
+
+/* Button Styling */
+button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #00b894, #00a085);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #00a085, #00b894);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0, 184, 148, 0.3);
+}
+
+/* Weather Output Container */
+#weather-output {
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+#weather-output:empty {
+  display: none;
+}
+
+/* Weather Information Styling */
+#weather-output p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  border-left: 4px solid #74b9ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+#weather-output p:hover {
+  transform: translateX(5px);
+}
+
+#weather-output p:last-child {
+  margin-bottom: 0;
+}
+
+/* Icon and Visual Enhancements */
+#weather-output p:first-child {
+  border-left-color: #00b894;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+#weather-output p:nth-child(2) {
+  border-left-color: #fd79a8;
+}
+
+#weather-output p:nth-child(3) {
+  border-left-color: #fdcb6e;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1rem;
+  }
+  
+  #location-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  #location {
+    min-width: 280px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  button {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  #weather-output {
+    padding: 20px;
+    margin: 0 10px;
+  }
+  
+  #weather-output p {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+/* Loading Animation */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Subtle animations for better UX */
+#weather-output {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Error state styling */
+.error {
+  background: linear-gradient(135deg, #ff7675, #e17055) !important;
+  color: white !important;
+  border-left-color: #d63031 !important;
+}
+
+/* Success state styling */
+.success {
+  background: linear-gradient(135deg, #00b894, #00cec9) !important;
+  color: white !important;
+  border-left-color: #00a085 !important;
+}

@@ -5,6 +5,7 @@ const locationContainer = document.querySelector("#location-container")
 
 const locationInput = document.createElement("input");
 locationInput.id = "location";
+locationInput.placeholder = "Enter city name or address...";
 locationContainer.appendChild(locationInput);
 
 const submit = document.createElement("button");
